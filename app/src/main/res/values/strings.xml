@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Shafie</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="gadgets">GADGETS</string>
+    <string name="cart">CART</string>
+    <string name="checkout">Checkout</string>
+    <string name="loading">Loading...</string>
+    <string name="no_item_in_the_cart">No item in the Cart</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="your_order_has_been_placed">Your Order has been Placed.</string>
+    <string name="continue_shopping">Continue Shopping</string>
+</resources>
