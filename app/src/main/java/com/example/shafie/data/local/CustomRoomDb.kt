@@ -1,26 +1,27 @@
-package com.example.shafie.data.dbhelper
+package com.example.shafie.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.shafie.data.remote.dtos.ProductDto
 
-@Database(entities = [DbEntity::class], version = 1, exportSchema = false)
-abstract class CustomRoomDb: RoomDatabase() {
+@Database(entities = [ProductDto::class], version = 1, exportSchema = false)
+abstract class CustomRoomDb : RoomDatabase() {
 
-    abstract fun productDao():DbDao
+    abstract fun productDao(): DbDao
 
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE: CustomRoomDb? =null
+        private var INSTANCE: CustomRoomDb? = null
 
-        fun getDataBase (context: Context): CustomRoomDb {
+        fun getDataBase(context: Context): CustomRoomDb {
             val tempInstance = INSTANCE
 
-            if(tempInstance!=null){
+            if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this){
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CustomRoomDb::class.java,
