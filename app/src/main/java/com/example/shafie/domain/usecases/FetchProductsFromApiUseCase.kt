@@ -14,7 +14,7 @@ class FetchProductsFromApiUseCase(
 //        if (password.isEmpty())
 //            throw UiException.EmptyPassword
 
-        return productRepo.getResultFromApi()?.map {
+        return productRepo.fetchAllProducts()?.map {
             it.toDomain()
         } ?: emptyList()
 

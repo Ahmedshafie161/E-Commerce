@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="190dp"
-    android:layout_marginBottom="5dp"
-    >
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginBottom="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -16,82 +14,79 @@
 
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/iv_productImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:id="@+id/iv_productImage"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                />
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
+                android:id="@+id/tv_productName"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_productName"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_productImage"
-                android:layout_marginTop="7dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
                 android:textColor="@color/black"
-                />
+                app:layout_constraintStart_toEndOf="@id/iv_productImage"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
+                android:id="@+id/tv_productRating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_productRating"
-                android:numStars="5"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                app:layout_constraintTop_toBottomOf="@id/tv_productName"
-                app:layout_constraintStart_toEndOf="@id/iv_productImage"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                />
+                android:layout_marginTop="5dp"
+                android:numStars="5"
+                app:layout_constraintStart_toEndOf="@id/iv_productImage"
+                app:layout_constraintTop_toBottomOf="@id/tv_productName" />
 
             <TextView
+                android:id="@+id/tv_productPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_productPrice"
-                app:layout_constraintTop_toBottomOf="@id/tv_productRating"
-                app:layout_constraintStart_toEndOf="@id/iv_productImage"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 app:drawableStartCompat="@drawable/output_onlinepngtools"
-                />
+                app:layout_constraintStart_toEndOf="@id/iv_productImage"
+                app:layout_constraintTop_toBottomOf="@id/tv_productRating" />
 
             <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/btn_addToCartAnim"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:id="@+id/btn_addToCartAnim"
-                app:layout_constraintStart_toEndOf="@id/iv_productImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_productPrice"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
-                app:lottie_rawRes="@raw/tapped_button"
-                android:background="@drawable/btn_background"
                 android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_productImage"
+                app:layout_constraintTop_toBottomOf="@id/tv_productPrice"
                 app:lottie_autoPlay="false"
-                app:lottie_speed="1"
-                />
+                android:background="@drawable/btn_background"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/tapped_button"
+                app:lottie_speed="1" />
 
             <com.google.android.material.button.MaterialButton
-                android:layout_width="0dp"
-                android:layout_height="50dp"
                 android:id="@+id/btn_addToCart"
                 style="@style/Widget.MaterialComponents.Button"
-                app:layout_constraintStart_toEndOf="@id/iv_productImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_productPrice"
-                android:layout_marginTop="8dp"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/add_to_cart"
                 android:backgroundTint="@color/sky_blue"
+                android:text="@string/add_to_cart"
                 android:textAllCaps="false"
+                android:visibility="visible"
                 app:cornerRadius="10dp"
-                android:visibility="visible"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_productImage"
+                app:layout_constraintTop_toBottomOf="@id/tv_productPrice" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,16 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.shafie.data.remote.dtos.ProductDto
 
-@Database(entities = [ProductDto::class], version = 1, exportSchema = false)
-abstract class CustomRoomDb : RoomDatabase() {
+@Database(
+    entities = [ProductDto::class],
+    version = 1,
+    exportSchema = false
+)
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun productDao(): DbDao
+    abstract fun productDao(): ProductDao
 
     companion object {
         @Volatile
-        private var INSTANCE: CustomRoomDb? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDataBase(context: Context): CustomRoomDb {
+        fun getDataBase(context: Context): AppDatabase {
             val tempInstance = INSTANCE
 
             if (tempInstance != null) {
@@ -24,7 +28,7 @@ abstract class CustomRoomDb : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    CustomRoomDb::class.java,
+                    AppDatabase::class.java,
                     "product_database"
                 ).build()
                 INSTANCE = instance

@@ -1,11 +1,19 @@
 package com.example.shafie.data.repo
 
 import com.example.shafie.data.remote.dtos.ProductDto
+import com.example.shafie.data.remote.dtos.ProductObject
 
 interface ProductRepo {
-    suspend fun getResultFromApi(): List<ProductDto>?
+    suspend fun fetchAllProducts(): List<ProductDto>?
 
-    suspend fun addProductToDatabase(product: ProductDto)
+    suspend fun refreshProducts()
 
-    suspend fun getProducts(): List<ProductDto>
+    suspend fun getAllProductsInCart(): List<ProductDto>
+
+    suspend fun getRemoteProducts(): ProductObject
+
+    suspend fun addProductToCart(
+        productId: Int,
+        addedToCart: Boolean
+    ): List<ProductDto>
 }

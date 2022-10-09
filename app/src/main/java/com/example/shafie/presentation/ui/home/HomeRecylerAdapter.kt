@@ -1,20 +1,15 @@
 package com.example.shafie.presentation.ui.home
 
-import android.animation.Animator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.shafie.databinding.AdapterHomeRecyclerBinding
 import com.example.shafie.domain.model.Product
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class HomeRecylerAdapter(
@@ -23,7 +18,6 @@ class HomeRecylerAdapter(
     RecyclerView.Adapter<HomeRecylerAdapter.ViewHolder>() {
 
     var list = mutableListOf<Product>()
-    lateinit var lottieButton: LottieAnimationView
 
     inner class ViewHolder(private val binding: AdapterHomeRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -36,39 +30,41 @@ class HomeRecylerAdapter(
                 tvProductName.text = item.name
                 tvProductPrice.text = item.price
                 tvProductRating.rating = item.rating.toFloat()
-                lottieButton = btnAddToCartAnim
-
+                if (item.addedToCart)
+                    btnAddToCartAnim.playAnimation()
                 btnAddToCart.setOnClickListener {
+                    it.isGone = true
+                    btnAddToCartAnim.playAnimation()
                     btnAddToCart.isInvisible = true
                     btnAddToCartAnim.isVisible = true
                     onAddToCart(item)
-                    lottieButton.playAnimation()
-                    lottieButton.addAnimatorListener(object : Animator.AnimatorListener {
-                        override fun onAnimationStart(p0: Animator?) {
-                            Log.d("AnimStart", "Started")
-                            CoroutineScope(Dispatchers.Main).launch {
-                                delay(3000)
-                                lottieButton.cancelAnimation()
-
-                            }
-                        }
-
-                        override fun onAnimationEnd(p0: Animator?) {
-                            Log.d("AnimEnd", "Animation ended")
-                            btnAddToCart.isVisible = true
-                            btnAddToCartAnim.isInvisible = true
-
-                        }
-
-                        override fun onAnimationCancel(p0: Animator?) {
-
-                        }
-
-                        override fun onAnimationRepeat(p0: Animator?) {
-
-                        }
-
-                    })
+                    btnAddToCartAnim.playAnimation()
+//                    lottieButton.addAnimatorListener(object : Animator.AnimatorListener {
+//                        override fun onAnimationStart(p0: Animator?) {
+//                            Log.d("AnimStart", "Started")
+//                            CoroutineScope(Dispatchers.Main).launch {
+//                                delay(3000)
+//                                lottieButton.cancelAnimation()
+//
+//                            }
+//                        }
+//
+//                        override fun onAnimationEnd(p0: Animator?) {
+//                            Log.d("AnimEnd", "Animation ended")
+//                            btnAddToCart.isVisible = true
+//                            btnAddToCartAnim.isInvisible = true
+//
+//                        }
+//
+//                        override fun onAnimationCancel(p0: Animator?) {
+//
+//                        }
+//
+//                        override fun onAnimationRepeat(p0: Animator?) {
+//
+//                        }
+//
+//                    })
 
 
 //                        Toast.makeText(homeActivity, "Item Added to Cart", Toast.LENGTH_SHORT).show()

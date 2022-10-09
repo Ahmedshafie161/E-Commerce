@@ -1,6 +1,6 @@
 package com.example.shafie.data.remote.dtos
 
-data class ProjectObject(
+data class ProductObject(
     val products: List<ProductDto>
 ) {
 }

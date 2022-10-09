@@ -1,17 +1,18 @@
 package com.example.shafie
 
 import android.app.Application
-import androidx.room.RoomDatabase
-import com.example.shafie.data.local.CustomRoomDb
+import com.example.shafie.data.local.AppDatabase
 import com.example.shafie.data.remote.RetrofitHelper
 import com.example.shafie.data.repo.ProductRepoImpl
 
 class CustomApplication : Application() {
 
     lateinit var productRepository: ProductRepoImpl
-    companion object{
-        lateinit var productDatabase: CustomRoomDb
+
+    companion object {
+        lateinit var productDatabase: AppDatabase
     }
+
     lateinit var retrofit: RetrofitHelper
 
 
@@ -22,7 +23,7 @@ class CustomApplication : Application() {
 
     private fun initialize() {
         retrofit = RetrofitHelper
-        productDatabase = CustomRoomDb.getDataBase(applicationContext)
+        productDatabase = AppDatabase.getDataBase(applicationContext)
         productRepository = ProductRepoImpl(productDatabase, retrofit)
 
     }

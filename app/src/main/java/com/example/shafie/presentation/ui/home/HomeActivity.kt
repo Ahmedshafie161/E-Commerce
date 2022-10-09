@@ -1,6 +1,7 @@
 package com.example.shafie.presentation.ui.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -34,11 +35,14 @@ class HomeActivity : AppCompatActivity(), AddCartListener {
         //setting recycler view
         setRecyclerView()
 
+        mViewModel.error.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+
 
         // observing product data from api through viewModel
         mViewModel.productLiveData.observe({ lifecycle }, {
-            if (it.isNotEmpty())
-                myAdapter.productList(it as MutableList<Product>)
+            if (it.isNotEmpty()) myAdapter.productList(it as MutableList<Product>)
             binding.rvGadgets.adapter?.notifyDataSetChanged()
         })
 
@@ -55,8 +59,11 @@ class HomeActivity : AppCompatActivity(), AddCartListener {
             myAdapter = HomeRecylerAdapter { productDetails ->
                 val product = ProductDto(
                     imageUrl = productDetails.imageUrl,
-                    name = productDetails.name, price = productDetails.price,
-                    rating = productDetails.rating
+                    name = productDetails.name,
+                    price = productDetails.price,
+                    rating = productDetails.rating,
+                    id = productDetails.id
+
                 )
                 addItemToCart(productDetails = product)
 
@@ -71,7 +78,7 @@ class HomeActivity : AppCompatActivity(), AddCartListener {
     // and save clicked item to room database
 
     override fun addItemToCart(productDetails: ProductDto) {
-
+        mViewModel.addProductToCart(id = productDetails.id ?: 0, added = productDetails.addedToCart)
 
         /*  CoroutineScope(Dispatchers.IO).launch {
               repository.addProductsToDatabase(product)
