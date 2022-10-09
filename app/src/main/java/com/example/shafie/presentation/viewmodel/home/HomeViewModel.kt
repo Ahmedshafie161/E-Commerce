@@ -1,30 +1,52 @@
 package com.example.shafie.presentation.viewmodel.home
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.shafie.data.repo.ProductRepo
-import com.example.shafie.network.modelapi.OnlineEntity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.shafie.domain.model.Product
+import com.example.shafie.domain.usecases.AddProductToCartUseCase
+import com.example.shafie.domain.usecases.FetchProductsFromApiUseCase
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: ProductRepo, application: Application) :AndroidViewModel(application) {
+class HomeViewModel(
+    private val fetchProductsFromApiUseCase: FetchProductsFromApiUseCase = FetchProductsFromApiUseCase(),
+    private val addProductToCartUseCase: AddProductToCartUseCase = AddProductToCartUseCase()
+) : ViewModel() {
+
+    private val _emailError = MutableLiveData<String>()
+    val emailError: LiveData<String> = _emailError
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
 
     init {
-        getOnlineProducts()   //calling this method to hit the api as soon as HomeViewModel class
-                        //gets initialized.
+        getOnlineProducts()
     }
 
-    private val products =MutableLiveData<List<OnlineEntity>>()
-    var productLiveData:LiveData<List<OnlineEntity>> = products   // live data variable which gets data back from the mutable live data to observe in home activity.
+    private val coroutineExceptionHandler
+        get() = CoroutineExceptionHandler { _, throwable ->
+            _error.value = throwable.message.orEmpty()
+        }
 
 
-    private fun getOnlineProducts(){
-        CoroutineScope(Dispatchers.IO).launch{
-            val productData= repository.getResultFromApi().body()?.products //variable to store the data that comes from api
-            products.postValue(productData)   //getting the data stored in mutable list
+    private val products = MutableLiveData<List<Product>>()
+    var productLiveData: LiveData<List<Product>> = products
+
+    fun addProductToCart(id: Int, added: Boolean) {
+        viewModelScope.launch {
+            val updatedProducts = addProductToCartUseCase(id = id, addedToCart = added)
+            products.value = updatedProducts
+        }
+    }
+
+
+    private fun getOnlineProducts() {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            val productData = fetchProductsFromApiUseCase()
+            products.value = productData
+
         }
     }
 

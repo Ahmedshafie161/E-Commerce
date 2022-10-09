@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shafie.CustomApplication
 import com.example.shafie.R
-import com.example.shafie.data.dbhelper.DbEntity
-import com.example.shafie.data.repo.ProductRepo
+import com.example.shafie.data.repo.ProductRepoImpl
 import com.example.shafie.databinding.FragmentCartBinding
+import com.example.shafie.domain.model.Product
 import com.example.shafie.presentation.ui.load.LoadFragment
 import com.example.shafie.presentation.viewmodel.cart.CartViewModel
 import com.example.shafie.presentation.viewmodel.cart.MainViewModelFactoryCart
@@ -23,7 +23,7 @@ class CartFragment : Fragment() {
 
     private lateinit var binding:FragmentCartBinding
     private lateinit var mAdapter: CartRecyclerAdapter
-    private lateinit var repository: ProductRepo
+    private lateinit var repository: ProductRepoImpl
     private lateinit var mViewModel:CartViewModel
 
     override fun onCreateView(
@@ -50,7 +50,7 @@ class CartFragment : Fragment() {
             if(it != null)
             {
                 Log.d("TAG","CartFragment livedata $it")
-                mAdapter.productListInCart(it as MutableList<DbEntity>)
+                mAdapter.productListInCart(it as MutableList<Product>)
                 binding.btnCheckout.isVisible=true
                 binding.tvNoItems.isInvisible=true
                 binding.rvCart.isVisible=true
